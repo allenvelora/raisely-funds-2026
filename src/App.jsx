@@ -48,22 +48,24 @@ function App() {
     setHasChanges(true);
   };
 
+  const handleReorderFunds = (fromIndex, toIndex) => {
+    setCampaignFunds((prev) => {
+      const updated = [...prev];
+      const [moved] = updated.splice(fromIndex, 1);
+      updated.splice(toIndex, 0, moved);
+      return updated;
+    });
+    setHasChanges(true);
+  };
+
   const handleDefaultFundChange = (fundId) => {
     setDefaultFundId(fundId);
-    // If the fund isn't in the campaign list yet, add it
-    const alreadyInCampaign = campaignFunds.find((f) => f.id === fundId);
-    if (!alreadyInCampaign) {
+    // In single fund mode, swap the campaign list to just the new default
+    if (!allowFundChoice || campaignFunds.length <= 1) {
       const orgFund = ORG_FUNDS.find((f) => f.id === fundId);
       if (orgFund) {
-        setCampaignFunds((prev) => [
-          { ...orgFund, isDefault: true },
-          ...prev.map((f) => ({ ...f, isDefault: false })),
-        ]);
+        setCampaignFunds([{ ...orgFund, isDefault: true }]);
       }
-    } else {
-      setCampaignFunds((prev) =>
-        prev.map((f) => ({ ...f, isDefault: f.id === fundId }))
-      );
     }
     setHasChanges(true);
   };
@@ -104,6 +106,7 @@ function App() {
           onToggleFundChoice={handleToggleFundChoice}
           onAddFunds={handleAddFunds}
           onRemoveFund={handleRemoveFund}
+          onReorderFunds={handleReorderFunds}
           onDefaultFundChange={handleDefaultFundChange}
           onFundSelectHeadingChange={(v) => { setFundSelectHeading(v); setHasChanges(true); }}
           onFundSelectLabelChange={(v) => { setFundSelectLabel(v); setHasChanges(true); }}

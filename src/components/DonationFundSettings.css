@@ -71,9 +71,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   padding: 14px 16px;
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
+}
+
+.fund-list__item--draggable {
+  padding-left: 10px;
+  user-select: none;
+  transition: background 0.1s ease, box-shadow 0.1s ease;
 }
 
 .fund-list__item:last-child {
@@ -85,6 +92,45 @@
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Drag handle */
+.fund-list__drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-300);
+  cursor: grab;
+  padding: 2px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.fund-list__drag-handle:hover {
+  color: var(--gray-500);
+}
+
+.fund-list__drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Draggable row */
+
+.fund-list__item--dragging {
+  opacity: 0.4;
+  background: var(--gray-50);
+}
+
+/* Drop indicators */
+.fund-list__item--drop-above {
+  box-shadow: inset 0 2px 0 0 var(--purple-600);
+}
+
+.fund-list__item--drop-below {
+  box-shadow: inset 0 -2px 0 0 var(--purple-600);
 }
 
 .fund-list__name {
