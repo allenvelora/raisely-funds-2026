@@ -48,6 +48,17 @@ function App() {
     setHasChanges(true);
   };
 
+  // Called when the user confirms disabling fund selection via the modal
+  const handleDisableFundChoice = () => {
+    setAllowFundChoice(false);
+    // Only retain the campaign default fund, remove the rest
+    setCampaignFunds((prev) => {
+      const defaultFund = prev.find((f) => f.id === defaultFundId);
+      return defaultFund ? [{ ...defaultFund, isDefault: true }] : prev;
+    });
+    setHasChanges(true);
+  };
+
   const handleReorderFunds = (fromIndex, toIndex) => {
     setCampaignFunds((prev) => {
       const updated = [...prev];
@@ -104,19 +115,15 @@ function App() {
           availableFundsToAdd={availableFundsToAdd}
           orgFunds={ORG_FUNDS}
           onToggleFundChoice={handleToggleFundChoice}
+          onDisableFundChoice={handleDisableFundChoice}
           onAddFunds={handleAddFunds}
           onRemoveFund={handleRemoveFund}
           onReorderFunds={handleReorderFunds}
           onDefaultFundChange={handleDefaultFundChange}
           onFundSelectHeadingChange={(v) => { setFundSelectHeading(v); setHasChanges(true); }}
           onFundSelectLabelChange={(v) => { setFundSelectLabel(v); setHasChanges(true); }}
+          onSave={handleSaveClick}
         />
-
-        <div className="save-bar">
-          <button className="btn btn--primary" onClick={handleSaveClick}>
-            Save Changes
-          </button>
-        </div>
       </div>
 
       {showModal && (

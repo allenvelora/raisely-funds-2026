@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Toggle from './Toggle';
 import FundMultiSelect from './FundMultiSelect';
+import DisableFundChoiceModal from './DisableFundChoiceModal';
 import { HelpIcon, TrashIcon, ChevronDownIcon } from './Icons';
 import './DonationFundSettings.css';
 
@@ -19,16 +20,19 @@ function OptionA({
   availableFundsToAdd,
   orgFunds,
   onToggleFundChoice,
+  onDisableFundChoice,
   onAddFunds,
   onRemoveFund,
   onDefaultFundChange,
   onReorderFunds,
   onFundSelectHeadingChange,
   onFundSelectLabelChange,
+  onSave,
 }) {
   const canDrag = campaignFunds.length > 1;
   const [dragIndex, setDragIndex] = useState(null);
   const [overIndex, setOverIndex] = useState(null);
+  const [showDisableModal, setShowDisableModal] = useState(false);
   const dragNode = useRef(null);
 
   const handleDragStart = (e, index) => {
@@ -57,6 +61,30 @@ function OptionA({
     setOverIndex(null);
     dragNode.current = null;
   };
+
+  // Intercept toggle: when turning OFF, show confirmation modal
+  const handleToggleChange = (enabled) => {
+    if (enabled) {
+      // Turning ON — no confirmation needed
+      onToggleFundChoice(true);
+    } else {
+      // Turning OFF — show confirmation modal
+      setShowDisableModal(true);
+    }
+  };
+
+  const handleConfirmDisable = () => {
+    setShowDisableModal(false);
+    onDisableFundChoice();
+  };
+
+  const handleCancelDisable = () => {
+    setShowDisableModal(false);
+  };
+
+  // Funds that will be removed (everything except the default)
+  const defaultFund = campaignFunds.find((f) => f.id === defaultFundId);
+  const fundsToRemove = campaignFunds.filter((f) => f.id !== defaultFundId);
 
   return (
     <div className="fund-settings">
@@ -163,7 +191,7 @@ function OptionA({
             enabled, this will appear under donation amounts
           </div>
         </div>
-        <Toggle checked={allowFundChoice} onChange={onToggleFundChoice} />
+        <Toggle checked={allowFundChoice} onChange={handleToggleChange} />
       </div>
 
       {/* Expanded settings when toggle is on */}
@@ -207,6 +235,23 @@ function OptionA({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Save button inside the card */}
+      <div className="fund-settings__save-bar">
+        <button className="btn btn--primary" onClick={onSave}>
+          Save Changes
+        </button>
+      </div>
+
+      {/* Confirmation modal when disabling fund selection */}
+      {showDisableModal && (
+        <DisableFundChoiceModal
+          defaultFundName={defaultFund?.name || 'General'}
+          fundsToRemove={fundsToRemove}
+          onCancel={handleCancelDisable}
+          onConfirm={handleConfirmDisable}
+        />
       )}
     </div>
   );
