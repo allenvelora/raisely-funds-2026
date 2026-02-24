@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './FundMultiSelect.css';
 
-function FundMultiSelect({ availableFunds, onAdd }) {
+function FundMultiSelect({ availableFunds, onAdd, disabled }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
@@ -49,6 +49,19 @@ function FundMultiSelect({ availableFunds, onAdd }) {
     }
     inputRef.current?.focus();
   };
+
+  if (disabled) {
+    return (
+      <div className="multi-select">
+        <div className="multi-select__control multi-select__control--disabled">
+          <span className="multi-select__placeholder">Select from a dropdown</span>
+          <svg className="multi-select__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
 
   if (availableFunds.length === 0 && !isOpen) {
     return (

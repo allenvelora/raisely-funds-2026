@@ -203,6 +203,11 @@
   gap: 6px;
 }
 
+.fund-settings__field--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .fund-settings__field-header {
   display: flex;
   align-items: center;

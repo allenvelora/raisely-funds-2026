@@ -291,3 +291,52 @@ body {
   border: 1px solid rgba(97, 56, 216, 0.2);
   margin-left: 8px;
 }
+
+/* ===== No Funds Banner ===== */
+.no-funds-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: var(--amber-50);
+  border: 1.5px solid var(--amber-200);
+  border-radius: var(--radius-md);
+}
+
+.no-funds-banner__icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.no-funds-banner__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.no-funds-banner__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.no-funds-banner__description {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.45;
+}
+
+.no-funds-banner__link {
+  font-size: 14px;
+  color: var(--gray-900);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-top: 2px;
+}
+
+.no-funds-banner__link:hover {
+  color: var(--purple-600);
+}

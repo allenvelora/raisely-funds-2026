@@ -28,6 +28,7 @@ function OptionA({
   onFundSelectHeadingChange,
   onFundSelectLabelChange,
   onSave,
+  onGoToOrgSettings,
 }) {
   const canDrag = campaignFunds.length > 1;
   const [dragIndex, setDragIndex] = useState(null);
@@ -82,9 +83,9 @@ function OptionA({
     setShowDisableModal(false);
   };
 
-  // Funds that will be removed (everything except the default)
   const defaultFund = campaignFunds.find((f) => f.id === defaultFundId);
   const fundsToRemove = campaignFunds.filter((f) => f.id !== defaultFundId);
+  const noAdditionalOrgFunds = orgFunds.length <= 1;
 
   return (
     <div className="fund-settings">
@@ -197,20 +198,40 @@ function OptionA({
       {/* Expanded settings when toggle is on */}
       {allowFundChoice && (
         <div className="fund-settings__expanded">
-          {/* Add more funds */}
-          <div className="fund-settings__field">
+          {noAdditionalOrgFunds && (
+            <div className="no-funds-banner">
+              <span className="no-funds-banner__icon">⚠</span>
+              <div className="no-funds-banner__content">
+                <strong className="no-funds-banner__title">No additional funds available</strong>
+                <p className="no-funds-banner__description">
+                  You need to create additional Funds before donors can choose where their donation goes.
+                </p>
+                <a
+                  href="#"
+                  className="no-funds-banner__link"
+                  onClick={(e) => { e.preventDefault(); onGoToOrgSettings?.(); }}
+                >
+                  Go to Organisation settings
+                </a>
+              </div>
+            </div>
+          )}
+
+          <div className={`fund-settings__field${noAdditionalOrgFunds ? ' fund-settings__field--disabled' : ''}`}>
             <label className="fund-settings__field-label">Add more funds to campaign</label>
             <FundMultiSelect
               availableFunds={availableFundsToAdd}
               onAdd={onAddFunds}
+              disabled={noAdditionalOrgFunds}
             />
             <p className="fund-settings__helper">
               Funds can be added from{' '}
-              <a href="#" className="link">Organisation settings &gt; Donation funds</a>
+              <a href="#" className="link" onClick={(e) => { e.preventDefault(); onGoToOrgSettings?.(); }}>
+                Organisation settings &gt; Donation funds
+              </a>
             </p>
           </div>
 
-          {/* Form Settings — no default fund dropdown here, it's already above */}
           <div className="fund-settings__form-labels">
             <span className="fund-settings__section-title">Donor facing labels (optional)</span>
 

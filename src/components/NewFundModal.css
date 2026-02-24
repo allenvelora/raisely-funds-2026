@@ -1,0 +1,138 @@
+/* ===== New Fund Modal ===== */
+.new-fund-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(38, 40, 97, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: overlayFadeIn 0.15s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.new-fund-modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 480px;
+  animation: modalSlideIn 0.2s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.new-fund-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+
+.new-fund-modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-900);
+  letter-spacing: -0.18px;
+}
+
+.new-fund-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--gray-400);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.new-fund-modal__close:hover {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+.new-fund-modal__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.new-fund-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.new-fund-modal__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.new-fund-modal__required {
+  color: var(--purple-600);
+}
+
+.new-fund-modal__helper {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+
+/* Checkbox row */
+.new-fund-modal__checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.new-fund-modal__checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--purple-600);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.new-fund-modal__checkbox-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.new-fund-modal__checkbox-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.new-fund-modal__checkbox-description {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+
+/* Footer */
+.new-fund-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px 20px;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 16px;
+  margin-top: -4px;
+}

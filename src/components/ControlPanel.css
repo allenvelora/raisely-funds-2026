@@ -1,0 +1,127 @@
+/* ===== Floating Control Panel ===== */
+.control-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+  background: var(--gray-900);
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.16);
+  min-width: 220px;
+  font-size: 13px;
+  animation: panelFadeIn 0.25s ease-out;
+}
+
+.control-panel--collapsed {
+  min-width: auto;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Toggle button */
+.control-panel__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 10px 14px;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--radius-lg);
+  transition: color 0.15s ease;
+}
+
+.control-panel__toggle:hover {
+  color: var(--white);
+}
+
+.control-panel__toggle-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Body */
+.control-panel__body {
+  padding: 0 14px 14px;
+}
+
+.control-panel__heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 14px;
+}
+
+/* Group */
+.control-panel__group {
+  margin-bottom: 12px;
+}
+
+.control-panel__group:last-child {
+  margin-bottom: 0;
+}
+
+.control-panel__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 6px;
+}
+
+/* Pill options */
+.control-panel__options {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.control-panel__options--stacked {
+  flex-direction: column;
+}
+
+.control-panel__pill {
+  flex: 1;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.control-panel__pill:hover {
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.control-panel__pill--active {
+  background: var(--purple-600);
+  color: var(--white);
+  box-shadow: 0 1px 4px rgba(97, 56, 216, 0.4);
+}
+
+.control-panel__pill--active:hover {
+  background: var(--purple-600);
+  color: var(--white);
+}
+
+.control-panel__pill--wide {
+  text-align: center;
+}

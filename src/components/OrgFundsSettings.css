@@ -1,0 +1,304 @@
+/* ===== Org Funds Settings (Settings Page Layout) ===== */
+.org-funds {
+  display: flex;
+  gap: 0;
+  min-height: 520px;
+}
+
+/* Sidebar nav */
+.org-funds__sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  padding-right: 24px;
+  border-right: 1.5px solid var(--gray-200);
+}
+
+.org-funds__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.org-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  border-left: 3px solid transparent;
+  margin-left: -3px;
+}
+
+.org-nav-item:hover {
+  color: var(--gray-800);
+  background: var(--gray-50);
+}
+
+.org-nav-item--active {
+  color: var(--purple-600);
+  font-weight: 600;
+  border-left-color: var(--purple-600);
+  background: var(--purple-50);
+}
+
+.org-nav-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: inherit;
+}
+
+.org-nav-item__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main content */
+.org-funds__main {
+  flex: 1;
+  padding-left: 32px;
+  min-width: 0;
+}
+
+.org-funds__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 6px;
+  letter-spacing: -0.18px;
+}
+
+.org-funds__description {
+  font-size: 14px;
+  color: var(--gray-600);
+  margin-bottom: 24px;
+  line-height: 1.45;
+}
+
+/* Toolbar */
+.org-funds__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.org-funds__count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.org-funds__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 7px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border-radius: 999px;
+}
+
+.org-funds__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.org-funds__search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  transition: border-color 0.15s ease;
+}
+
+.org-funds__search:focus-within {
+  border-color: var(--purple-600);
+  box-shadow: var(--shadow-active);
+}
+
+.org-funds__search svg {
+  color: var(--gray-400);
+  flex-shrink: 0;
+}
+
+.org-funds__search-input {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  background: transparent;
+  color: var(--gray-800);
+  width: 140px;
+}
+
+.org-funds__search-input::placeholder {
+  color: var(--gray-400);
+}
+
+/* Fund list */
+.org-funds__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  overflow: visible;
+}
+
+.org-funds__list > .org-funds__item:first-child {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.org-funds__list > .org-funds__item:last-child {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.org-funds__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-100);
+  transition: background 0.1s ease;
+}
+
+.org-funds__item:last-child {
+  border-bottom: none;
+}
+
+.org-funds__item:hover {
+  background: var(--gray-50);
+}
+
+.org-funds__item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.org-funds__item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  display: flex;
+  align-items: center;
+}
+
+.org-funds__item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.org-funds__item-label {
+  color: var(--gray-400);
+}
+
+.org-funds__item-value {
+  color: var(--gray-600);
+}
+
+.org-funds__item-actions {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.org-funds__item-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--gray-400);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+}
+
+.org-funds__item-menu:hover {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* Dropdown menu */
+.org-funds__dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  min-width: 180px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 4px;
+  animation: dropdownFadeIn 0.12s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.org-funds__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-700);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-align: left;
+}
+
+.org-funds__dropdown-item:hover {
+  background: var(--gray-50);
+  color: var(--gray-900);
+}
+
+.org-funds__dropdown-item--disabled {
+  color: var(--gray-400);
+  cursor: default;
+  pointer-events: none;
+}
+
+.org-funds__dropdown-item--danger {
+  color: #dc2626;
+}
+
+.org-funds__dropdown-item--danger:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
