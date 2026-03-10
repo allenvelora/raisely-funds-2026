@@ -14,6 +14,23 @@ const DEFAULT_ORG_FUNDS = [
   { id: '2026', name: '2026', description: 'Annual Fund 2026' },
   { id: 'special', name: 'Special Projects', description: 'Special Projects Fund' },
   { id: 'emergencies', name: 'Emergencies', description: 'Emergency Fund' },
+  { id: 'missions', name: 'Missions', description: 'Missions Fund' },
+  { id: 'youth', name: 'Youth', description: 'Youth Programs Fund' },
+  { id: 'worship', name: 'Worship', description: 'Worship & Arts Fund' },
+  { id: 'outreach', name: 'Outreach', description: 'Community Outreach Fund' },
+  { id: 'benevolence', name: 'Benevolence', description: 'Benevolence Fund' },
+  { id: 'capital', name: 'Capital Campaign', description: 'Capital Campaign Fund' },
+  { id: 'scholarships', name: 'Scholarships', description: 'Scholarship Fund' },
+  { id: 'staff', name: 'Staff Support', description: 'Staff Support Fund' },
+  { id: 'technology', name: 'Technology', description: 'Technology Fund' },
+  { id: 'operations', name: 'Operations', description: 'Operations Fund' },
+  { id: 'events', name: 'Events', description: 'Events Fund' },
+  { id: 'memorial', name: 'Memorial', description: 'Memorial Gifts Fund' },
+  { id: 'endowment', name: 'Endowment', description: 'Endowment Fund' },
+  { id: 'disaster', name: 'Disaster Relief', description: 'Disaster Relief Fund' },
+  { id: 'food-bank', name: 'Food Bank', description: 'Food Bank Fund' },
+  { id: 'mentoring', name: 'Mentoring', description: 'Mentoring Programs Fund' },
+  { id: 'transport', name: 'Transport', description: 'Transport & Logistics Fund' },
 ];
 
 const GENERAL_ONLY = [
@@ -27,6 +44,8 @@ function App() {
   // Prototype control states
   const [hasAdditionalFunds, setHasAdditionalFunds] = useState(true);
   const [createFrom, setCreateFrom] = useState('campaign');
+  const [terminology, setTerminology] = useState('funds');
+  const [paginationEnabled, setPaginationEnabled] = useState(false);
 
   // Dynamic org funds (can grow when user creates new funds)
   const [allOrgFunds, setAllOrgFunds] = useState(DEFAULT_ORG_FUNDS);
@@ -152,6 +171,8 @@ function App() {
             <OrgFundsSettings
               orgFunds={orgFunds}
               orgDefaultFundId={orgDefaultFundId}
+              terminology={terminology}
+              paginationEnabled={paginationEnabled}
               onSetOrgDefault={setOrgDefaultFundId}
               onAddOrgFund={handleAddOrgFund}
               onEditOrgFund={handleEditOrgFund}
@@ -180,6 +201,8 @@ function App() {
               fundSelectLabel={fundSelectLabel}
               availableFundsToAdd={availableFundsToAdd}
               orgFunds={orgFunds}
+              terminology={terminology}
+              paginationEnabled={paginationEnabled}
               onToggleFundChoice={handleToggleFundChoice}
               onDisableFundChoice={handleDisableFundChoice}
               onAddFunds={handleAddFunds}
@@ -207,6 +230,10 @@ function App() {
         setFundsEnabled={setHasAdditionalFunds}
         createFrom={createFrom}
         setCreateFrom={setCreateFrom}
+        terminology={terminology}
+        setTerminology={setTerminology}
+        paginationEnabled={paginationEnabled}
+        setPaginationEnabled={setPaginationEnabled}
       />
     </div>
   );

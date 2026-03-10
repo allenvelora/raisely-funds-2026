@@ -1,7 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import './FundMultiSelect.css';
 
-function FundMultiSelect({ availableFunds, onAdd, disabled }) {
+function FundMultiSelect({ availableFunds, onAdd, disabled, terminology }) {
+  const isDesignations = terminology === 'designations';
+  const t = {
+    funds: isDesignations ? 'designations' : 'funds',
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
@@ -67,7 +71,7 @@ function FundMultiSelect({ availableFunds, onAdd, disabled }) {
     return (
       <div className="multi-select">
         <div className="multi-select__control multi-select__control--disabled">
-          <span className="multi-select__placeholder">No more funds available</span>
+          <span className="multi-select__placeholder">No more {t.funds} available</span>
         </div>
       </div>
     );
@@ -155,7 +159,7 @@ function FundMultiSelect({ availableFunds, onAdd, disabled }) {
               );
             })}
             {filteredFunds.length === 0 && (
-              <div className="multi-select__empty">No matching funds</div>
+              <div className="multi-select__empty">No matching {t.funds}</div>
             )}
           </div>
           <div className="multi-select__footer">

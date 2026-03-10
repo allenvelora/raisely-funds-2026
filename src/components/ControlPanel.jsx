@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './ControlPanel.css';
 
-function ControlPanel({ fundsEnabled, setFundsEnabled, createFrom, setCreateFrom }) {
+function ControlPanel({ fundsEnabled, setFundsEnabled, createFrom, setCreateFrom, terminology, setTerminology, paginationEnabled, setPaginationEnabled }) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -33,6 +33,42 @@ function ControlPanel({ fundsEnabled, setFundsEnabled, createFrom, setCreateFrom
                 onClick={() => setFundsEnabled(true)}
               >
                 Multiple
+              </button>
+            </div>
+          </div>
+
+          <div className="control-panel__group">
+            <div className="control-panel__label">Terminology</div>
+            <div className="control-panel__options">
+              <button
+                className={`control-panel__pill${terminology === 'funds' ? ' control-panel__pill--active' : ''}`}
+                onClick={() => setTerminology('funds')}
+              >
+                Funds
+              </button>
+              <button
+                className={`control-panel__pill${terminology === 'designations' ? ' control-panel__pill--active' : ''}`}
+                onClick={() => setTerminology('designations')}
+              >
+                Designations
+              </button>
+            </div>
+          </div>
+
+          <div className="control-panel__group">
+            <div className="control-panel__label">Pagination</div>
+            <div className="control-panel__options">
+              <button
+                className={`control-panel__pill${!paginationEnabled ? ' control-panel__pill--active' : ''}`}
+                onClick={() => setPaginationEnabled(false)}
+              >
+                Off
+              </button>
+              <button
+                className={`control-panel__pill${paginationEnabled ? ' control-panel__pill--active' : ''}`}
+                onClick={() => setPaginationEnabled(true)}
+              >
+                On
               </button>
             </div>
           </div>

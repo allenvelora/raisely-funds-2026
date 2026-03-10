@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import './NewFundModal.css';
 
-function NewFundModal({ fund, isDefault, onCancel, onSave }) {
+function NewFundModal({ fund, isDefault, terminology, onCancel, onSave }) {
+  const isDesignations = terminology === 'designations';
+  const t = {
+    fund: isDesignations ? 'designation' : 'fund',
+    Fund: isDesignations ? 'Designation' : 'Fund',
+  };
   const isEditing = !!fund;
   const [internalName, setInternalName] = useState(fund?.name || '');
   const [publicName, setPublicName] = useState(fund?.description || '');
@@ -23,7 +28,7 @@ function NewFundModal({ fund, isDefault, onCancel, onSave }) {
     <div className="new-fund-overlay" onClick={onCancel}>
       <div className="new-fund-modal" onClick={(e) => e.stopPropagation()}>
         <div className="new-fund-modal__header">
-          <h2 className="new-fund-modal__title">{isEditing ? 'Edit fund' : 'New fund'}</h2>
+          <h2 className="new-fund-modal__title">{isEditing ? `Edit ${t.fund}` : `New ${t.fund}`}</h2>
           <button className="new-fund-modal__close" onClick={onCancel}>
             <CloseIcon />
           </button>
@@ -69,9 +74,9 @@ function NewFundModal({ fund, isDefault, onCancel, onSave }) {
               onChange={(e) => setSetAsDefault(e.target.checked)}
             />
             <div className="new-fund-modal__checkbox-content">
-              <span className="new-fund-modal__checkbox-label">Set as default fund</span>
+              <span className="new-fund-modal__checkbox-label">Set as default {t.fund}</span>
               <span className="new-fund-modal__checkbox-description">
-                Donations made to all new campaigns will be designated to this fund. You can customise this for each campaign in Campaign &gt; Settings.
+                Donations made to all new campaigns will be designated to this {t.fund}. You can customise this for each campaign in Campaign &gt; Settings.
               </span>
             </div>
           </label>

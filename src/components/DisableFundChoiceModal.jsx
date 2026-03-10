@@ -1,17 +1,17 @@
 import './DisableFundChoiceModal.css';
 
-/**
- * Confirmation modal shown when the user toggles OFF "Allow donors to choose a specific fund".
- * Warns that this takes effect immediately on live campaigns and that all non-default funds
- * will be removed, retaining only the campaign default fund.
- */
-function DisableFundChoiceModal({ defaultFundName, fundsToRemove, onCancel, onConfirm }) {
+function DisableFundChoiceModal({ defaultFundName, fundsToRemove, terminology, onCancel, onConfirm }) {
+  const isDesignations = terminology === 'designations';
+  const t = {
+    fund: isDesignations ? 'designation' : 'fund',
+    funds: isDesignations ? 'designations' : 'funds',
+  };
   const hasMultipleFunds = fundsToRemove.length > 0;
 
   return (
     <div className="modal-overlay" onClick={onCancel}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2 className="modal__title">Disable fund selection?</h2>
+        <h2 className="modal__title">Disable {t.fund} selection?</h2>
 
         <div className="modal__warning">
           <div className="modal__warning-icon">
@@ -27,14 +27,14 @@ function DisableFundChoiceModal({ defaultFundName, fundsToRemove, onCancel, onCo
         </div>
 
         <p className="modal__body">
-          Donors will no longer be able to choose which fund their donation goes to.
-          All donations will be routed to the default fund <strong>{defaultFundName}</strong>.
+          Donors will no longer be able to choose which {t.fund} their donation goes to.
+          All donations will be routed to the default {t.fund} <strong>{defaultFundName}</strong>.
         </p>
 
         {hasMultipleFunds && (
           <div className="disable-modal__fund-removal">
             <p className="disable-modal__fund-removal-label">
-              The following {fundsToRemove.length === 1 ? 'fund' : 'funds'} will be removed from this campaign:
+              The following {fundsToRemove.length === 1 ? t.fund : t.funds} will be removed from this campaign:
             </p>
             <ul className="disable-modal__fund-list">
               {fundsToRemove.map((fund) => (
@@ -52,7 +52,7 @@ function DisableFundChoiceModal({ defaultFundName, fundsToRemove, onCancel, onCo
             Cancel
           </button>
           <button className="btn btn--danger" onClick={onConfirm}>
-            Disable fund selection
+            Disable {t.fund} selection
           </button>
         </div>
       </div>

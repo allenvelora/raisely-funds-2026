@@ -1,13 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import { HelpIcon, ChevronDownIcon } from './Icons';
 import NewFundModal from './NewFundModal';
+import Pagination, { PAGE_SIZE } from './Pagination';
 import './OrgFundsSettings.css';
 
-function OrgFundsSettings({ orgFunds, orgDefaultFundId, onSetOrgDefault, onAddOrgFund, onEditOrgFund, onArchiveOrgFund }) {
+function useTerms(terminology) {
+  const isDesignations = terminology === 'designations';
+  return {
+    fund: isDesignations ? 'designation' : 'fund',
+    Fund: isDesignations ? 'Designation' : 'Fund',
+    funds: isDesignations ? 'designations' : 'funds',
+    Funds: isDesignations ? 'Designations' : 'Funds',
+  };
+}
+
+function OrgFundsSettings({ orgFunds, orgDefaultFundId, terminology, paginationEnabled, onSetOrgDefault, onAddOrgFund, onEditOrgFund, onArchiveOrgFund }) {
+  const t = useTerms(terminology);
   const [searchQuery, setSearchQuery] = useState('');
   const [menuOpenId, setMenuOpenId] = useState(null);
   const [showNewFundModal, setShowNewFundModal] = useState(false);
   const [editingFund, setEditingFund] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -26,18 +39,34 @@ function OrgFundsSettings({ orgFunds, orgDefaultFundId, onSetOrgDefault, onAddOr
       f.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const needsPagination = paginationEnabled && filtered.length > PAGE_SIZE;
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paginatedItems = needsPagination
+    ? filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+    : filtered;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
   return (
     <div className="org-funds">
       <div className="org-funds__main">
-        <h2 className="org-funds__title">Donation funds</h2>
+        <h2 className="org-funds__title">Donation {t.funds}</h2>
         <p className="org-funds__description">
-          Create and manage your organisation's donation funds.{' '}
-          <a href="#" className="link">Learn more about funds</a>
+          Create and manage your organisation&apos;s donation {t.funds}.{' '}
+          <a href="#" className="link">Learn more about {t.funds}</a>
         </p>
 
         <div className="org-funds__toolbar">
           <div className="org-funds__count">
-            Funds <span className="org-funds__badge">{orgFunds.length}</span>
+            {t.Funds} <span className="org-funds__badge">{orgFunds.length}</span>
           </div>
           <div className="org-funds__actions">
             <div className="org-funds__search">
@@ -45,19 +74,19 @@ function OrgFundsSettings({ orgFunds, orgDefaultFundId, onSetOrgDefault, onAddOr
               <input
                 type="text"
                 className="org-funds__search-input"
-                placeholder="Search funds..."
+                placeholder={`Search ${t.funds}...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             <button className="btn btn--primary btn--sm" onClick={() => setShowNewFundModal(true)}>
-              + New fund
+              + New {t.fund}
             </button>
           </div>
         </div>
 
         <div className="org-funds__list" ref={listRef}>
-          {filtered.map((fund) => {
+          {paginatedItems.map((fund) => {
             const isDefault = fund.id === orgDefaultFundId;
             const isMenuOpen = menuOpenId === fund.id;
             return (
@@ -106,10 +135,19 @@ function OrgFundsSettings({ orgFunds, orgDefaultFundId, onSetOrgDefault, onAddOr
             );
           })}
         </div>
+
+        {needsPagination && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={filtered.length}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
 
       {showNewFundModal && (
         <NewFundModal
+          terminology={terminology}
           onCancel={() => setShowNewFundModal(false)}
           onSave={(fund) => {
             onAddOrgFund?.(fund);
@@ -122,6 +160,7 @@ function OrgFundsSettings({ orgFunds, orgDefaultFundId, onSetOrgDefault, onAddOr
         <NewFundModal
           fund={editingFund}
           isDefault={editingFund.id === orgDefaultFundId || editingFund._setDefault}
+          terminology={terminology}
           onCancel={() => setEditingFund(null)}
           onSave={(data) => {
             onEditOrgFund?.(data);

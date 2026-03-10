@@ -3,10 +3,6 @@ import FundMultiSelect from './FundMultiSelect';
 import { HelpIcon, TrashIcon, ChevronDownIcon } from './Icons';
 import './DonationFundSettings.css';
 
-/**
- * Original design — default fund selector is inside the toggle-gated section.
- * Kept as a reference but no longer rendered by App (replaced by Option A/B/C).
- */
 function DonationFundSettings({
   campaignFunds,
   allowFundChoice,
@@ -14,6 +10,7 @@ function DonationFundSettings({
   fundSelectHeading,
   fundSelectLabel,
   availableFundsToAdd,
+  terminology,
   onToggleFundChoice,
   onAddFunds,
   onRemoveFund,
@@ -21,23 +18,31 @@ function DonationFundSettings({
   onFundSelectHeadingChange,
   onFundSelectLabelChange,
 }) {
+  const isDesignations = terminology === 'designations';
+  const t = {
+    fund: isDesignations ? 'designation' : 'fund',
+    Fund: isDesignations ? 'Designation' : 'Fund',
+    funds: isDesignations ? 'designations' : 'funds',
+    Funds: isDesignations ? 'Designations' : 'Funds',
+  };
+
   return (
     <div className="fund-settings">
       <div className="fund-settings__header">
         <h2 className="fund-settings__title">
-          Donation fund settings
+          Donation {t.fund} settings
           <span className="badge badge--new">New</span>
         </h2>
         <p className="fund-settings__description">
-          Set the default fund for your donations made to this campaign and allow donors to
-          select a fund to designate their donation to.{' '}
+          Set the default {t.fund} for your donations made to this campaign and allow donors to
+          select a {t.fund} to designate their donation to.{' '}
           <a href="#" className="link">Learn more</a>
         </p>
       </div>
 
       <div className="fund-settings__section">
         <div className="fund-settings__section-header">
-          <span className="fund-settings__label">Funds available in this campaign</span>
+          <span className="fund-settings__label">{t.Funds} available in this campaign</span>
           <button className="icon-btn icon-btn--help" title="Help">
             <HelpIcon />
           </button>
@@ -57,7 +62,7 @@ function DonationFundSettings({
                 <button
                   className="icon-btn icon-btn--delete"
                   onClick={() => onRemoveFund(fund.id)}
-                  title="Remove fund"
+                  title={`Remove ${t.fund}`}
                 >
                   <TrashIcon />
                 </button>
@@ -69,9 +74,9 @@ function DonationFundSettings({
 
       <div className="fund-settings__toggle-section">
         <div className="fund-settings__toggle-content">
-          <div className="fund-settings__toggle-label">Allow donors to choose a specific fund</div>
+          <div className="fund-settings__toggle-label">Allow donors to choose a specific {t.fund}</div>
           <div className="fund-settings__toggle-description">
-            Allow your donors to select a fund to designate their donation to. When
+            Allow your donors to select a {t.fund} to designate their donation to. When
             enabled, this will appear under donation amounts
           </div>
         </div>
@@ -81,20 +86,21 @@ function DonationFundSettings({
       {allowFundChoice && (
         <div className="fund-settings__expanded">
           <div className="fund-settings__field">
-            <label className="fund-settings__field-label">Add more funds to campaign</label>
+            <label className="fund-settings__field-label">Add more {t.funds} to campaign</label>
             <FundMultiSelect
               availableFunds={availableFundsToAdd}
               onAdd={onAddFunds}
+              terminology={terminology}
             />
             <p className="fund-settings__helper">
-              Funds can be added from{' '}
-              <a href="#" className="link">Organisation settings &gt; Donation funds</a>
+              {t.Funds} can be added from{' '}
+              <a href="#" className="link">Organisation settings &gt; Donation {t.funds}</a>
             </p>
           </div>
 
           <div className="fund-settings__field">
             <div className="fund-settings__field-header">
-              <label className="fund-settings__field-label">Default fund</label>
+              <label className="fund-settings__field-label">Default {t.fund}</label>
               <button className="icon-btn icon-btn--help" title="Help">
                 <HelpIcon />
               </button>
@@ -121,7 +127,7 @@ function DonationFundSettings({
             </span>
 
             <div className="fund-settings__field">
-              <label className="fund-settings__field-label">Fund select heading</label>
+              <label className="fund-settings__field-label">{t.Fund} select heading</label>
               <input
                 type="text"
                 className="text-input"
@@ -131,7 +137,7 @@ function DonationFundSettings({
             </div>
 
             <div className="fund-settings__field">
-              <label className="fund-settings__field-label">Fund select input label</label>
+              <label className="fund-settings__field-label">{t.Fund} select input label</label>
               <input
                 type="text"
                 className="text-input"
