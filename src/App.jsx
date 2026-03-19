@@ -44,7 +44,7 @@ function App() {
   // Prototype control states
   const [hasAdditionalFunds, setHasAdditionalFunds] = useState(true);
   const [createFrom, setCreateFrom] = useState('campaign');
-  const [terminology, setTerminology] = useState('funds');
+  const [terminology, setTerminology] = useState('designations');
   const [paginationEnabled, setPaginationEnabled] = useState(false);
 
   // Dynamic org funds (can grow when user creates new funds)
